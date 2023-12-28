@@ -230,7 +230,11 @@
       dataType: "json",
       success: function(resp) {
         console.log(resp.data.html);
-      },
+        // $('#title1').html(resp.data.html);
+      }
+      // ,error: function(resp){
+      //   console.warn(resp);
+      // }
     });
   });
 

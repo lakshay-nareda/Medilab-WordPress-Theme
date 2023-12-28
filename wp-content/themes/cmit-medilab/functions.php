@@ -483,7 +483,7 @@ function cw_post_type_gallery()
 
 		'not_found' => __('No department found.'),
 
-		 
+
 
 	);
 
@@ -507,7 +507,7 @@ function cw_post_type_gallery()
 
 		// 'show_in_menu'=>'edit.php?post_type=page',
 
-	
+
 
 	);
 
@@ -903,77 +903,6 @@ function cw_post_type_gallery()
 	);
 
 	register_post_type('whyme', $args);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
@@ -1278,17 +1207,42 @@ add_theme_support('custom-header');
 
 
 
-add_action( 'wp_ajax_get_departmeants', 'ajx_handle_my_action' );
-add_action( 'wp_ajax_nopriv_get_departmeants', 'ajx_handle_my_action' );
+add_action('wp_ajax_get_departmeants', 'ajx_handle_my_action');
+add_action('wp_ajax_nopriv_get_departmeants', 'ajx_handle_my_action');
 
-function ajx_handle_my_action() {
+function ajx_handle_my_action()
+{
 
-	$department = isset($_POST['department']) ? $_POST['department']: '';
+	$department = isset($_POST['department']) ? $_POST['department'] : '';
+
+	if ($department) {
+
+		$args = array(
+			'post_type' => 'department',
+			'posts_per_page' => 1,
+			'orderby' => 'date',
+			'order' => 'ASC',
+
 	
-    if($department) {
-		
+		);
 
-		wp_send_json_success(['html' => '<h1>Hello '.$department.'</h1>']);
+		$the_query = new WP_Query($args);
+		$depat_title = '';
+		if ($the_query->have_posts()) {
+			while ($the_query->have_posts()) {
+				$the_query->the_post();
+				$depat_title .= get_field('depart_title');
+			}
+			// echo $depat_title;
+			// 	die('<br>ok');
+		}
+		//  echo 'hello';
+		// wp_send_json_success($depat_title);
+		// echo $depat_title;
+		// die('<br>ok');
+		// wp_reset_postdata();
+		wp_send_json_success(['html' => '<h1>Hello ' . $department . '</h1>']);
+
 	}
 	exit;
 }

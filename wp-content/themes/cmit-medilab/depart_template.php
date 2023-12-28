@@ -66,7 +66,7 @@ get_header(); ?>
                   $category_classes .= '' . $term->slug;
                 } 
                 ?>
-              <div class="tab-pane  <?php if($count == 1){ echo 'active'; } ?>" id="<?= $category_classes; ?>" style="display: none;" >
+              <div class="tab-pane  <?php if($count == 1){ echo 'active'; } ?>" id="<?= $category_classes; ?>"  >
                 <div class="row gy-4 active show" >
                   <div class="col-lg-8 details order-2 order-lg-1">
                     <h3 id="title1" > <?php the_field('depart_title'); ?></h3>
