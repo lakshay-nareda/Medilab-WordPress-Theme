@@ -219,5 +219,19 @@
    * Initiate Pure Counter 
    */
   new PureCounter();
+  $(document).on("click", ".department-tab", function(){
+    let department = $(this).text();
+
+
+    $.ajax({
+      url: ajax_url,
+      type: "POST",
+      data: {'action' : 'get_departmeants', 'department': department},
+      dataType: "json",
+      success: function(resp) {
+        console.log(resp.data.html);
+      },
+    });
+  });
 
 })()

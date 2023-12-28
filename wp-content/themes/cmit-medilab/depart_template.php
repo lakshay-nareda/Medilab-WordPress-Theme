@@ -1,9 +1,9 @@
 <?php /* Template Name: New Department */
 get_header(); ?>
-?>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
 <section id="departments" class="departments">
   <div class="container">
@@ -29,8 +29,8 @@ get_header(); ?>
           if ($terms) {
             foreach ($terms as $value) {
               if (!empty($value->count)) { ?>
-                <li class="nav-item">
-                  <a class="nav-link <?php if($count == 1){ echo 'active show'; } ?>" data-bs-toggle="tab" href="#<?= $value->slug; ?>"><?= $value->name; ?> </a>
+                <li class="nav-item" id="nav-item" >
+                  <a  id="demo" class="nav-link department-tab <?php if($count == 1){ echo 'active show'; } ?>" data-bs-toggle="tab" href="#<?= $value->slug; ?>"  ><?= $value->name; ?> </a>
                 </li>
                 <?php
                     }
@@ -66,10 +66,10 @@ get_header(); ?>
                   $category_classes .= '' . $term->slug;
                 } 
                 ?>
-              <div class="tab-pane <?php if($count == 1){ echo 'active'; } ?>" id="<?= $category_classes; ?>">
+              <div class="tab-pane  <?php if($count == 1){ echo 'active'; } ?>" id="<?= $category_classes; ?>" style="display: none;" >
                 <div class="row gy-4 active show" >
                   <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3><?php the_field('depart_title'); ?></h3>
+                    <h3 id="title1" > <?php the_field('depart_title'); ?></h3>
                     <p class="fst-italic"><?php the_field('depart_dis');  ?></p>
                     <p><?php the_field('depart_contant'); ?></p>
                   </div>
@@ -88,5 +88,16 @@ get_header(); ?>
 
   </div>
 </section>
+
+<script>
+  function contentData(){
+
+    $(document).ready(function(){
+      $('#demo').click(function(){
+        $('.tab-pane').show();
+      })
+    })
+  }
+</script>
 
 <?php get_footer(); ?>

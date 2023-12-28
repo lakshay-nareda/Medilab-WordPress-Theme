@@ -1271,3 +1271,24 @@ add_action('init', 'whyme_sec');
 
 // FOR Custom Header
 add_theme_support('custom-header');
+
+
+
+
+
+
+
+add_action( 'wp_ajax_get_departmeants', 'ajx_handle_my_action' );
+add_action( 'wp_ajax_nopriv_get_departmeants', 'ajx_handle_my_action' );
+
+function ajx_handle_my_action() {
+
+	$department = isset($_POST['department']) ? $_POST['department']: '';
+	
+    if($department) {
+		
+
+		wp_send_json_success(['html' => '<h1>Hello '.$department.'</h1>']);
+	}
+	exit;
+}
