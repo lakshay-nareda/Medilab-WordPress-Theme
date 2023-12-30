@@ -14,7 +14,7 @@ get_header(); ?>
     </div>
 
     <div class="row gy-4">
-      <div class="col-lg-3">`
+      <div class="col-lg-3 department-tab ">`
         <ul class="nav nav-tabs flex-column">
           <?php
           $terms = get_terms(array(
@@ -30,7 +30,7 @@ get_header(); ?>
             foreach ($terms as $value) {
               if (!empty($value->count)) { ?>
                 <li class="nav-item" id="nav-item" >
-                  <a  id="demo" class="nav-link department-tab <?php if($count == 1){ echo 'active show'; } ?>" data-bs-toggle="tab" href="#<?= $value->slug; ?>"  ><?= $value->name; ?> </a>
+                  <a  id="demo" class="nav-link  <?php if($count == 1){ echo 'active show'; } ?>" data-bs-toggle="tab" href="#<?= $value->slug; ?>"  data-categories_depart="<?= $value->name; ?>"><?= $value->name; ?> </a>
                 </li>
                 <?php
                     }
@@ -67,9 +67,9 @@ get_header(); ?>
                 } 
                 ?>
               <div class="tab-pane  <?php if($count == 1){ echo 'active'; } ?>" id="<?= $category_classes; ?>"  >
-                <div class="row gy-4 active show" >
+                <div class="row gy-4 active show title1" >
                   <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3 id="title1" > <?php the_field('depart_title'); ?></h3>
+                    <h3  > <?php the_field('depart_title'); ?></h3>
                     <p class="fst-italic"><?php the_field('depart_dis');  ?></p>
                     <p><?php the_field('depart_contant'); ?></p>
                   </div>

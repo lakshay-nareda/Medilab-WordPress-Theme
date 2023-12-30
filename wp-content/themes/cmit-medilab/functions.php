@@ -1213,36 +1213,63 @@ add_action('wp_ajax_nopriv_get_departmeants', 'ajx_handle_my_action');
 function ajx_handle_my_action()
 {
 
-	$department = isset($_POST['department']) ? $_POST['department'] : '';
+	// $department = isset($_POST['department']) ? $_POST['department'] : '';
 
-	if ($department) {
+	// if ($department) {
 
-		$args = array(
-			'post_type' => 'department',
-			'posts_per_page' => 1,
-			'orderby' => 'date',
-			'order' => 'ASC',
+	// $args = array(
+	// 	'post_type' => 'department',
+	// 	'posts_per_page' => 1,
+	// );
 
-	
-		);
+	// $the_query = new WP_Query($args);
+	// $depat_title = '';
+	// if ($the_query->have_posts()) {
+	// 	while ($the_query->have_posts()) {
+	// 		$the_query->the_post();
+	// 		$depat_title .= get_field('depart_title');
+	// 	}
 
-		$the_query = new WP_Query($args);
-		$depat_title = '';
-		if ($the_query->have_posts()) {
-			while ($the_query->have_posts()) {
-				$the_query->the_post();
-				$depat_title .= get_field('depart_title');
-			}
-			// echo $depat_title;
-			// 	die('<br>ok');
-		}
-		//  echo 'hello';
-		// wp_send_json_success($depat_title);
-		// echo $depat_title;
-		// die('<br>ok');
-		// wp_reset_postdata();
-		wp_send_json_success(['html' => '<h1>Hello ' . $department . '</h1>']);
+	// 	}
+	// 	// print_r($depat_title);
+	// 	// die('ok');
+	// 	wp_send_json_success(['html' => '<h1>Hello ' . $department . '</h1>']);
 
-	}
-	exit;
+	// }
+	// exit;
+
+
+	$category = $_POST['category'];
+
+	// if ($category) {
+
+
+	$args = array(
+		'post_type' => 'department',
+		'posts_per_page' => 1,
+	);
+
+	$the_query = new WP_Query($args);
+
+
+	$the_query->the_post();
+
+	// print_r($the_query);
+	// die('done');
+	// $project_name = '';
+	// if ($the_query->have_posts()) {
+	// 	while ($the_query->have_posts()) {
+	// 		$the_query->the_post();
+	// 		$project_name .= get_field('project_name', $category);
+	// 	}
+	// }
+	// echo $project_name;
+	// die('done');
+	wp_send_json_success(['html' => '<h1>Hello ' . $category . '</h1>']);
+	wp_send_json_success(['html' => '<h1>Hello ' . $the_query . '</h1>']);
+
+	// }
+	// exit;
+
+
 }
