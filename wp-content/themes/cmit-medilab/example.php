@@ -111,3 +111,38 @@
 </script>
 
     <?php get_footer(); ?>
+
+
+
+
+
+    <div class="tab-pane active show" id="neurology" role="tabpanel" aria-labelledby="demo">
+                <div class="row gy-4 active show title1">
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    <h3> Et blanditiis nemo veritatis excepturi</h3>
+                    <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
+                    <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
+                  </div>
+                  <div class="col-lg-4 text-center order-1 order-lg-2">
+                    <img src="http://localhost/cmit-medilab/wp-content/uploads/2023/12/departments-2.jpg" alt="" class="img-fluid">
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              		<div id="myData" >
+		<div class="tab-pane"  >
+                <div class="row gy-4 active show title1" >
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    <h3  > <?php the_field('depart_title'); ?></h3>
+                    <p class="fst-italic"><?php the_field('depart_dis');  ?></p>
+                    <p><?php the_field('depart_contant'); ?></p>
+                  </div>
+                  <div class="col-lg-4 text-center order-1 order-lg-2">
+                    <img src="<?php the_post_thumbnail_url(); ?>" alt="" class="img-fluid">
+                  </div>
+                </div>
+              </div>
+		</div>

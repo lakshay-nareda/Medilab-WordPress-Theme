@@ -1212,64 +1212,62 @@ add_action('wp_ajax_nopriv_get_departmeants', 'ajx_handle_my_action');
 
 function ajx_handle_my_action()
 {
+	$department = isset($_POST['department']) ? $_POST['department'] : '';
 
-	// $department = isset($_POST['department']) ? $_POST['department'] : '';
+	if ($department) {
+?>
 
-	// if ($department) {
+		<div id="myData">
+			<div class="tab-content">
+				<?php
+				// $args = array(
+				// 	'post_type' => 'department',
+				// 	'posts_per_page' => 1,
+				// 	// 'orderby' => 'date',
+				// 	'order' => 'ASC',
+				// );
+				// $query = new WP_Query( array( 'post_type' => 'department', 'post__in' => array( 218, 220, 222, 224, 226 ) ) );
+				$the_query = new WP_Query( array( 'post_type' => 'department', 'order' => 'ASC', 'post__in' => array( 218, 220) ) );
+				?>
 
-	// $args = array(
-	// 	'post_type' => 'department',
-	// 	'posts_per_page' => 1,
-	// );
+				<?php
+				if ($the_query->have_posts()) ?>
 
-	// $the_query = new WP_Query($args);
-	// $depat_title = '';
-	// if ($the_query->have_posts()) {
-	// 	while ($the_query->have_posts()) {
-	// 		$the_query->the_post();
-	// 		$depat_title .= get_field('depart_title');
-	// 	}
+				<?php
+				$count = 1;
+				while ($the_query->have_posts()) {
+					$the_query->the_post();
 
-	// 	}
-	// 	// print_r($depat_title);
-	// 	// die('ok');
-	// 	wp_send_json_success(['html' => '<h1>Hello ' . $department . '</h1>']);
-
-	// }
-	// exit;
-
-
-	$category = $_POST['category'];
-
-	// if ($category) {
-
-
-	$args = array(
-		'post_type' => 'department',
-		'posts_per_page' => 1,
-	);
-
-	$the_query = new WP_Query($args);
-
-
-	$the_query->the_post();
-
-	// print_r($the_query);
-	// die('done');
-	// $project_name = '';
-	// if ($the_query->have_posts()) {
-	// 	while ($the_query->have_posts()) {
-	// 		$the_query->the_post();
-	// 		$project_name .= get_field('project_name', $category);
-	// 	}
-	// }
-	// echo $project_name;
-	// die('done');
-	wp_send_json_success(['html' => '<h1>Hello ' . $category . '</h1>']);
-	wp_send_json_success(['html' => '<h1>Hello ' . $the_query . '</h1>']);
-
-	// }
-	// exit;
-
-
+					$terms = get_the_terms(get_the_ID(), 'categories_depart');
+					if ($terms) {
+						$category_classes = '';
+						foreach ($terms as $term) {
+							$category_classes .= '' . $term->slug;
+						}
+				?>
+						<div class="tab-pane  <?php if ($count == 1) {
+													echo 'active';
+												} ?>" id="<?= $category_classes; ?>">
+							<div class="row gy-4 active show title1">
+								<div class="col-lg-8 details order-2 order-lg-1">
+									<h3> <?php the_field('depart_title'); ?></h3>
+									<p class="fst-italic"><?php the_field('depart_dis');  ?></p>
+									<p><?php the_field('depart_contant'); ?></p>
+								</div>
+								<div class="col-lg-4 text-center order-1 order-lg-2">
+									<img src="<?php the_post_thumbnail_url(); ?>" alt="" class="img-fluid">
+								</div>
+							</div>
+						</div>
+				<?php }
+					$count++;
+				}
+				wp_reset_query();
+				wp_reset_postdata(); ?>
+			</div>
+		</div>
+<?php
+		wp_send_json_success(['html' => $department]);
+	}
+	exit;
 }

@@ -42,31 +42,32 @@ get_header(); ?>
       <div class="col-lg-9">
         <div class="tab-content">
           <?php
-          $args = array(
-            'post_type' => 'department',
-            'posts_per_page' => -1,
-            'orderby' => 'date',
-            'order' => 'ASC',
-          );
-          $the_query = new WP_Query($args);
+          // $args = array(
+          //   'post_type' => 'department',
+          //   'posts_per_page' => -1,
+          //   'orderby' => 'date',
+          //   'order' => 'ASC',
+          // );
+          $the_query = new WP_Query(array('post_type'=>'department','order'=>'ASC','post__in'=>array(226)));
           ?>
             
           <?php
-          if ($the_query->have_posts()) ?>
+          // if ($the_query->have_posts()) 
+          ?>
 
             <?php
-           $count = 1;
-            while ($the_query->have_posts()) {
-              $the_query->the_post();
+          //  $count = 1;
+            // while ($the_query->have_posts()) {
+              // $the_query->the_post();
              
-              $terms = get_the_terms(get_the_ID(), 'categories_depart');
-              if ($terms) {
-                $category_classes = '';
-                foreach ($terms as $term) {
-                  $category_classes .= '' . $term->slug;
-                } 
+              // $terms = get_the_terms(get_the_ID(), 'categories_depart');
+              // if ($terms) {
+              //   $category_classes = '';
+              //   foreach ($terms as $term) {
+              //     $category_classes .= '' . $term->slug;
+              //   } 
                 ?>
-              <div class="tab-pane  <?php if($count == 1){ echo 'active'; } ?>" id="<?= $category_classes; ?>"  >
+              <!-- <div class="tab-pane  <?php if($count == 1){ echo 'active'; } ?>" /*id="<?= $category_classes; ?>"  >
                 <div class="row gy-4 active show title1" >
                   <div class="col-lg-8 details order-2 order-lg-1">
                     <h3  > <?php the_field('depart_title'); ?></h3>
@@ -77,9 +78,12 @@ get_header(); ?>
                     <img src="<?php the_post_thumbnail_url(); ?>" alt="" class="img-fluid">
                   </div>
                 </div>
-              </div>
-          <?php }
-             $count++; }
+              </div> -->
+          <?php
+          //  }
+            //  $count++; 
+            // }
+
           wp_reset_query();
           wp_reset_postdata(); ?>
         </div>

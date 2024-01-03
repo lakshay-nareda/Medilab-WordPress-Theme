@@ -221,20 +221,21 @@
   new PureCounter();
   $(document).on("click", ".nav-item a", function(e){
     e.preventDefault();
-    // let department = $(this).text();
+    let department = $(this).text();
+
     // console.log('text');
 
-    let category = $(this).data('categories_depart');
+    // let category = $(this).data('categories_depart');
 // console.log(category);
     $.ajax({
       url: ajax_url,
       type: "POST",
-      // data: {'action' : 'get_departmeants', 'department': department},
-      data: {'action' : 'get_departmeants', 'category' : category},
+      data: {'action' : 'get_departmeants', 'department': department},
+      // data: {'action' : 'get_departmeants', 'category' : category},
       dataType: "json",
       success: function(resp) {
-        // console.log(resp.data.html);
-        $('.title1').html(resp.data.html);
+        console.log(resp.data);
+        $('#myData').html(resp.data.html);
         
       }, 
       error: function(resp){
