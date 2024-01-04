@@ -1235,14 +1235,18 @@ function ajx_handle_my_action()
 		while ($the_query->have_posts()) {
 			$the_query->the_post();
 ?>
-			<div class="row gy-4 active show title1">
+			<div style="display:flex;" class="row gy-4 active show title1">
 				<div class="col-lg-8 details order-2 order-lg-1">
+					<P>This is AJAX</P>
 					<h3> <?php echo get_field('depart_title'); ?></h3>
 					<p class="fst-italic"><?php echo get_field('depart_dis');  ?></p>
 					<p><?php echo get_field('depart_contant'); ?></p>
 				</div>
 				<div class="col-lg-4 text-center order-1 order-lg-2">
-					<?php the_post_thumbnail('large'); ?>
+					<div class="img-fluid">
+						<?php the_post_thumbnail('medium'); ?>
+					</div>
+					<!-- <img src="<php the_post_thumbnail_url(); ?>" class="img-fluid"> -->
 				</div>
 			</div>
 <?php

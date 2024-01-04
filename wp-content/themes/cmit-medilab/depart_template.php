@@ -23,7 +23,7 @@ get_header(); ?>
             'hide_empty' => false,
           ));
           ?>
-         
+          
           <?php
           $count = 1;
           if ($terms) {
@@ -92,7 +92,7 @@ get_header(); ?>
   </div>
 </section>
 
-<script>
+<!-- <script>
   function contentData(){
 
     $(document).ready(function(){
@@ -101,6 +101,9 @@ get_header(); ?>
       })
     })
   }
-</script>
+</script> -->
 
 <?php get_footer(); ?>
+<!-- jQuery(document).on("click", ".nav-item a", function(e){
+        console.log("ok");
+    }); -->

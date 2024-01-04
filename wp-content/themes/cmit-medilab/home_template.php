@@ -362,94 +362,91 @@
 
     <!-- ======= Departments Section ======= -->
     <section id="departments" class="departments">
-      <div class="container">
+  <div class="container">
 
-        <div class="section-title">
-          <h2>Departments</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
+    <div class="section-title">
+      <h2>Departments</h2>
+      <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+    </div>
 
-        <div class="row gy-4">
-          <div class="col-lg-3">
-            <ul class="nav nav-tabs flex-column">
-              <?php
-              $terms = get_terms(array(
-                'post_type' => 'department',
-                'taxonomy'   => 'categories_depart',
-                'hide_empty' => false,
-              ));
-              ?>
-
-              <?php
-              $count = 1;
-              if ($terms) {
-                foreach ($terms as $value) {
-                  if (!empty($value->count)) { ?>
-                    <li class="nav-item">
-                      <a class="nav-link <?php if ($count == 1) {
-                                            echo 'active show';
-                                          } ?>" data-bs-toggle="tab" href="#<?= $value->slug; ?>"><?= $value->name; ?> </a>
-                    </li>
-              <?php
-                  }
+    <div class="row gy-4">
+      <div class="col-lg-3 department-tab ">`
+        <ul class="nav nav-tabs flex-column">
+          <?php
+          $terms = get_terms(array(
+            'post_type' => 'department',
+            'taxonomy'   => 'categories_depart',
+            'hide_empty' => false,
+          ));
+          ?>
+         
+          <?php
+          $count = 1;
+          if ($terms) {
+            foreach ($terms as $value) {
+              if (!empty($value->count)) { ?>
+                <li class="nav-item" id="nav-item" >
+                <!-- <input type="hidden" data-cat_id=<php echo $category_classes; ?> > -->
+                  <a  id="demo" class="nav-link <?php if($count == 1){ echo 'active show'; } ?>" data-bs-toggle="tab" href="<?= $value->slug; ?>"  data-categories_depart="<?= $value->slug; ?>"><?= $value->name; ?> </a>
+                </li>
+                <?php
+                    }
                   $count++;
                 }
-              }
-              ?>
-            </ul>
-          </div>
-          <div class="col-lg-9">
-            <div class="tab-content">
-              <?php
-              $args = array(
-                'post_type' => 'department',
-                'posts_per_page' => -1,
-                'orderby' => 'date',
-                'order' => 'ASC',
-              );
-              $the_query = new WP_Query($args);
-              ?>
-
-              <?php
-              if ($the_query->have_posts()) ?>
-
-              <?php
-              $count = 1;
-              while ($the_query->have_posts()) {
-                $the_query->the_post();
-
-                $terms = get_the_terms(get_the_ID(), 'categories_depart');
-                if ($terms) {
-                  $category_classes = '';
-                  foreach ($terms as $term) {
-                    $category_classes .= '' . $term->slug;
-                  }
-              ?>
-                  <div class="tab-pane <?php if ($count == 1) {
-                                          echo 'active';
-                                        } ?>" id="<?= $category_classes; ?>">
-                    <div class="row gy-4 active show">
-                      <div class="col-lg-8 details order-2 order-lg-1">
-                        <h3><?php the_field('depart_title'); ?></h3>
-                        <p class="fst-italic"><?php the_field('depart_dis');  ?></p>
-                        <p><?php the_field('depart_contant'); ?></p>
-                      </div>
-                      <div class="col-lg-4 text-center order-1 order-lg-2">
-                        <img src="<?php the_post_thumbnail_url(); ?>" alt="" class="img-fluid">
-                      </div>
-                    </div>
-                  </div>
-              <?php }
-                $count++;
-              }
-              wp_reset_query();
-              wp_reset_postdata(); ?>
-            </div>
-          </div>
-        </div>
-
+                }
+          ?>
+        </ul>
       </div>
-    </section><!-- End Departments Section -->
+      <div class="col-lg-9">
+        <div class="tab-content" id="post_data">
+          <?php
+          $args = array(
+            'post_type' => 'department',
+            'posts_per_page' => -1,
+            'orderby' => 'date',
+            'order' => 'ASC',
+          );
+          $the_query = new WP_Query($args);
+          ?>
+            
+          <?php
+          if ($the_query->have_posts()) ?>
+
+            <?php
+           $count = 1;
+            while ($the_query->have_posts()) {
+              $the_query->the_post();
+             
+              $terms = get_the_terms(get_the_ID(), 'categories_depart');
+              if ($terms) {
+                $category_classes = '';
+                foreach ($terms as $term) {
+                  $category_classes .= '' . $term->slug;
+                } 
+                ?>
+                
+              <div class="tab-pane <?php if($count == 1){ echo 'active'; } ?>">
+                <div class="row gy-4 active show title1">
+                  <div class="col-lg-8 details order-2 order-lg-1">
+                    <h3  > <?php the_field('depart_title'); ?></h3>
+                    <p class="fst-italic"><?php the_field('depart_dis');  ?></p>
+                    <p><?php the_field('depart_contant'); ?></p>
+                  </div>
+                  <div class="col-lg-4 text-center order-1 order-lg-2">
+                    <img src="<?php the_post_thumbnail_url(); ?>" alt="" class="img-fluid">
+                  </div>
+                </div>
+              </div>
+          <?php }
+            $count++; }
+          wp_reset_query();
+          wp_reset_postdata(); ?>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>><!-- End Departments Section -->
 
     <!-- ======= Doctors Section ======= -->
     <section id="doctors" class="doctors">
@@ -687,89 +684,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <footer id="footer">
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Medilab</h3>
-            <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
-            </p>
-          </div>
-
-          <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <?php wp_nav_menu(array(
-              'theme_location' => 'secondary', 'menu_class' => 'footer-links'
-            ))  ?>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-4 col-md-6 footer-newsletter">
-            <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="container d-md-flex py-4">
-
-      <div class="me-md-auto text-center text-md-start">
-        <div class="copyright">
-          &copy; Copyright <strong><span>Medilab</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/ -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
-      </div>
-      <div class="social-links text-center text-md-right pt-3 pt-md-0">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-      </div>
-    </div>
-  </footer><!-- End Footer -->
-
-  <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="<?php echo get_template_directory_uri(); ?>/assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="<?php echo get_template_directory_uri(); ?>/assets/js/main.js"></script>
+          <?php get_footer();?>
 
 </body>
 
