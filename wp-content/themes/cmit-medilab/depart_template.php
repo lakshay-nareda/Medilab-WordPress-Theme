@@ -30,17 +30,19 @@ get_header(); ?>
             foreach ($terms as $value) {
               if (!empty($value->count)) { ?>
                 <li class="nav-item" id="nav-item" >
-                  <a  id="demo" class="nav-link  <?php if($count == 1){ echo 'active show'; } ?>" data-bs-toggle="tab" href="#<?= $value->slug; ?>"  data-categories_depart="<?= $value->name; ?>"><?= $value->name; ?> </a>
+                <!-- <input type="hidden" data-cat_id=<php echo $category_classes; ?> > -->
+                  <a  id="demo" class="nav-link <?php if($count == 1){ echo 'active show'; } ?>" data-bs-toggle="tab" href="<?= $value->slug; ?>"  data-categories_depart="<?= $value->slug; ?>"><?= $value->name; ?> </a>
                 </li>
                 <?php
                     }
-                  $count++;}
+                  $count++;
+                }
                 }
           ?>
         </ul>
       </div>
       <div class="col-lg-9">
-        <div class="tab-content">
+        <div class="tab-content" id="post_data">
           <?php
           $args = array(
             'post_type' => 'department',
@@ -66,8 +68,9 @@ get_header(); ?>
                   $category_classes .= '' . $term->slug;
                 } 
                 ?>
-              <div class="tab-pane  <?php if($count == 1){ echo 'active'; } ?>" id="<?= $category_classes; ?>"  >
-                <div class="row gy-4 active show title1" >
+                
+              <div class="tab-pane <?php if($count == 1){ echo 'active'; } ?>">
+                <div class="row gy-4 active show title1">
                   <div class="col-lg-8 details order-2 order-lg-1">
                     <h3  > <?php the_field('depart_title'); ?></h3>
                     <p class="fst-italic"><?php the_field('depart_dis');  ?></p>
@@ -79,7 +82,7 @@ get_header(); ?>
                 </div>
               </div>
           <?php }
-             $count++; }
+            $count++; }
           wp_reset_query();
           wp_reset_postdata(); ?>
         </div>

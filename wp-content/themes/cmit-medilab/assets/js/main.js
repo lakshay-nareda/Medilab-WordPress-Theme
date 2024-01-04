@@ -221,7 +221,10 @@
   new PureCounter();
   $(document).on("click", ".nav-item a", function(e){
     e.preventDefault();
-    let department = $(this).text();
+    let catData = jQuery(this);
+    let catSlug = catData.data("categories_depart");
+    // console.log(catSlug);
+    // let department = $(this).text();
 
     // console.log('text');
 
@@ -230,12 +233,12 @@
     $.ajax({
       url: ajax_url,
       type: "POST",
-      data: {'action' : 'get_departmeants', 'department': department},
+      data: {'action' : 'get_departmeants', 'catSlug':catSlug },
       // data: {'action' : 'get_departmeants', 'category' : category},
       dataType: "json",
       success: function(resp) {
-        console.log(resp.data);
-        $('#myData').html(resp.data.html);
+        // console.log(resp);
+        $('#post_data').html(resp.data);
         
       }, 
       error: function(resp){

@@ -1212,62 +1212,49 @@ add_action('wp_ajax_nopriv_get_departmeants', 'ajx_handle_my_action');
 
 function ajx_handle_my_action()
 {
-	$department = isset($_POST['department']) ? $_POST['department'] : '';
+	// echo 
+	$cat_slug = $_POST['catSlug'];
 
-	if ($department) {
+	$some_args = array(
+		'posts_per_page' => -1,
+		'post_type' => 'department',
+		'tax_query'      => array(
+			array(
+				'taxonomy' => 'categories_depart',
+				'field'    => 'slug',
+				'terms'    => $cat_slug
+			),
+		),
+	);
+	$the_query = new WP_Query($some_args);
+
+
+	$response = '';
+	if ($the_query->have_posts()) {
+		ob_start();
+		while ($the_query->have_posts()) {
+			$the_query->the_post();
 ?>
-
-		<div id="myData">
-			<div class="tab-content">
-				<?php
-				// $args = array(
-				// 	'post_type' => 'department',
-				// 	'posts_per_page' => 1,
-				// 	// 'orderby' => 'date',
-				// 	'order' => 'ASC',
-				// );
-				// $query = new WP_Query( array( 'post_type' => 'department', 'post__in' => array( 218, 220, 222, 224, 226 ) ) );
-				$the_query = new WP_Query( array( 'post_type' => 'department', 'order' => 'ASC', 'post__in' => array( 218, 220) ) );
-				?>
-
-				<?php
-				if ($the_query->have_posts()) ?>
-
-				<?php
-				$count = 1;
-				while ($the_query->have_posts()) {
-					$the_query->the_post();
-
-					$terms = get_the_terms(get_the_ID(), 'categories_depart');
-					if ($terms) {
-						$category_classes = '';
-						foreach ($terms as $term) {
-							$category_classes .= '' . $term->slug;
-						}
-				?>
-						<div class="tab-pane  <?php if ($count == 1) {
-													echo 'active';
-												} ?>" id="<?= $category_classes; ?>">
-							<div class="row gy-4 active show title1">
-								<div class="col-lg-8 details order-2 order-lg-1">
-									<h3> <?php the_field('depart_title'); ?></h3>
-									<p class="fst-italic"><?php the_field('depart_dis');  ?></p>
-									<p><?php the_field('depart_contant'); ?></p>
-								</div>
-								<div class="col-lg-4 text-center order-1 order-lg-2">
-									<img src="<?php the_post_thumbnail_url(); ?>" alt="" class="img-fluid">
-								</div>
-							</div>
-						</div>
-				<?php }
-					$count++;
-				}
-				wp_reset_query();
-				wp_reset_postdata(); ?>
+			<div class="row gy-4 active show title1">
+				<div class="col-lg-8 details order-2 order-lg-1">
+					<h3> <?php echo get_field('depart_title'); ?></h3>
+					<p class="fst-italic"><?php echo get_field('depart_dis');  ?></p>
+					<p><?php echo get_field('depart_contant'); ?></p>
+				</div>
+				<div class="col-lg-4 text-center order-1 order-lg-2">
+					<?php the_post_thumbnail('large'); ?>
+				</div>
 			</div>
-		</div>
 <?php
-		wp_send_json_success(['html' => $department]);
+		}
+		$response = ob_get_clean();
 	}
-	exit;
+
+	// print_r($response);
+	wp_send_json_success($response);
+	// die();
+
+
+
+
 }
